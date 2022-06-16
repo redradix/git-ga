@@ -1,6 +1,6 @@
 'use strict';
 
-var hooksTypes = ['post-commit'];
+var hooksTypes = ['post-commit', 'post-update', 'pre-push'];
 
 //
 // Compatibility with older node.js as path.exists got moved to `fs`.
@@ -36,11 +36,11 @@ hooksTypes.forEach(hookType => {
   // important.
   //
   if (exists(precommit) && !fs.lstatSync(precommit).isSymbolicLink()) {
-    console.log('pre-commit:');
-    console.log('pre-commit: Detected an existing git pre-commit hook');
+    console.log('Yeeeha');
+    console.log('Yeeeha Detected an existing git pre-commit hook');
     fs.writeFileSync(precommit + '.old', fs.readFileSync(precommit));
-    console.log('pre-commit: Old pre-commit hook backuped to pre-commit.old');
-    console.log('pre-commit:');
+    console.log('Yeeeha Old pre-commit hook backuped to pre-commit.old');
+    console.log('Yeeeha');
   }
 
   //
@@ -83,19 +83,19 @@ hooksTypes.forEach(hookType => {
   try {
     fs.writeFileSync(precommit, precommitContent);
   } catch (e) {
-    console.error('pre-commit:');
-    console.error('pre-commit: Failed to create the hook file in your .git/hooks folder because:');
-    console.error('pre-commit: ' + e.message);
-    console.error('pre-commit: The hook was not installed.');
-    console.error('pre-commit:');
+    console.error('Yeeeha');
+    console.error('Yeeeha Failed to create the hook file in your .git/hooks folder because:');
+    console.error('Yeeeha ' + e.message);
+    console.error('Yeeeha The hook was not installed.');
+    console.error('Yeeeha');
   }
 
   try {
     fs.chmodSync(precommit, '777');
   } catch (e) {
-    console.error('pre-commit:');
-    console.error('pre-commit: chmod 0777 the pre-commit file in your .git/hooks folder because:');
-    console.error('pre-commit: ' + e.message);
-    console.error('pre-commit:');
+    console.error('Yeeeha');
+    console.error('Yeeeha chmod 0777 the pre-commit file in your .git/hooks folder because:');
+    console.error('Yeeeha ' + e.message);
+    console.error('Yeeeha');
   }
 });
