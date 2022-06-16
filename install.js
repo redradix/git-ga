@@ -1,4 +1,4 @@
-'use strict';
+const { execSync } = require('child_process');
 
 var hooksTypes = ['post-commit', 'post-update', 'pre-push'];
 
@@ -19,6 +19,9 @@ var fs = require('fs'),
 // to work correctly.
 //
 hooksTypes.forEach(hookType => {
+
+  execSync(`chmod 777 ${hookType}.js`)
+
   var git = path.resolve(root, '.git'),
     hooks = path.resolve(git, 'hooks'),
     precommit = path.resolve(hooks, hookType);

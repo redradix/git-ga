@@ -47,6 +47,5 @@ if [[ $* == *--dry-run* ]]; then
     exit 1
   fi
 else
-  "$BINARY" "$("$BINARY" -e "console.log(require.resolve('yeeeha/index'))")"
-  # "$BINARY" "$("$BINARY" -e "console.log(require.resolve('yeeeha/"$1"'))")"
+  "$BINARY" "$("$BINARY" -e "console.log(require.resolve('yeeeha/"$1"'))")"
 fi
