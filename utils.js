@@ -1,6 +1,8 @@
 const { execSync } = require('child_process')
+const axios = require('axios')
 const os = require('os')
 const path = require('path')
+const constants = require('./constants')
 
 const execute = command => {
   return execSync(command).toString()
@@ -32,6 +34,18 @@ const getCommitDate = info => {
 const log = message => {
   console.log(`YEEEHA: ${message}`)
 }
+
+const collet = data => {
+  axios
+    .post(constants.serverUrl, data)
+    .then(() => {
+      log(`sent commit metrics to Yeeeha ${JSON.stringify(data)}`)
+    })
+    .catch(e => {
+      log(e)
+    })
+}
+
 // helpers
 
 const getMessageLine = (info, prefix) => {
@@ -46,6 +60,7 @@ const getLineData = (line, prefix) => {
 }
 
 module.exports = {
+  collet,
   execute,
   getCommitAuthor,
   getCommitHash,

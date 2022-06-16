@@ -1,6 +1,6 @@
-const { execSync } = require('child_process');
+const { execSync } = require('child_process')
 
-var hooksTypes = ['post-commit', 'post-update', 'pre-push'];
+var hooksTypes = ['post-commit', 'post-update', 'pre-push']
 
 //
 // Compatibility with older node.js as path.exists got moved to `fs`.
@@ -10,7 +10,7 @@ var fs = require('fs'),
   os = require('os'),
   hook = path.join(__dirname, 'hook'),
   root = path.resolve(__dirname, '..', '..'),
-  exists = fs.existsSync || path.existsSync;
+  exists = fs.existsSync || path.existsSync
 
 //
 // Gather the location of the possible hidden .git directory, the hooks
@@ -19,19 +19,18 @@ var fs = require('fs'),
 // to work correctly.
 //
 hooksTypes.forEach(hookType => {
-
   execSync(`chmod 777 ${hookType}.js`)
 
   var git = path.resolve(root, '.git'),
     hooks = path.resolve(git, 'hooks'),
-    precommit = path.resolve(hooks, hookType);
+    precommit = path.resolve(hooks, hookType)
 
   //
   // Bail out if we don't have an `.git` directory as the hooks will not get
   // triggered. If we do have directory create a hooks folder if it doesn't exist.
   //
-  if (!exists(git) || !fs.lstatSync(git).isDirectory()) return;
-  if (!exists(hooks)) fs.mkdirSync(hooks);
+  if (!exists(git) || !fs.lstatSync(git).isDirectory()) return
+  if (!exists(hooks)) fs.mkdirSync(hooks)
 
   //
   // If there's an existing `pre-commit` hook we want to back it up instead of
@@ -39,11 +38,11 @@ hooksTypes.forEach(hookType => {
   // important.
   //
   if (exists(precommit) && !fs.lstatSync(precommit).isSymbolicLink()) {
-    console.log('Yeeeha');
-    console.log('Yeeeha Detected an existing git pre-commit hook');
-    fs.writeFileSync(precommit + '.old', fs.readFileSync(precommit));
-    console.log('Yeeeha Old pre-commit hook backuped to pre-commit.old');
-    console.log('Yeeeha');
+    console.log('Yeeeha')
+    console.log('Yeeeha Detected an existing git pre-commit hook')
+    fs.writeFileSync(precommit + '.old', fs.readFileSync(precommit))
+    console.log('Yeeeha Old pre-commit hook backuped to pre-commit.old')
+    console.log('Yeeeha')
   }
 
   //
@@ -51,16 +50,16 @@ hooksTypes.forEach(hookType => {
   // finish the installation process.
   //
   try {
-    fs.unlinkSync(precommit);
+    fs.unlinkSync(precommit)
   } catch (e) {}
 
   // Create generic precommit hook that launches this modules hook (as well
   // as stashing - unstashing the unstaged changes)
   // TODO: we could keep launching the old pre-commit scripts
-  var hookRelativeUnixPath = hook.replace(root, '.');
+  var hookRelativeUnixPath = hook.replace(root, '.')
 
   if (os.platform() === 'win32') {
-    hookRelativeUnixPath = hookRelativeUnixPath.replace(/[\\\/]+/g, '/');
+    hookRelativeUnixPath = hookRelativeUnixPath.replace(/[\\\/]+/g, '/')
   }
 
   var precommitContent =
@@ -76,7 +75,7 @@ hooksTypes.forEach(hookType => {
     '[ $RESULT -ne 0 ] && exit 1' +
     os.EOL +
     'exit 0' +
-    os.EOL;
+    os.EOL
 
   //
   // It could be that we do not have rights to this folder which could cause the
@@ -84,21 +83,21 @@ hooksTypes.forEach(hookType => {
   // error instead destroying the whole npm install process.
   //
   try {
-    fs.writeFileSync(precommit, precommitContent);
+    fs.writeFileSync(precommit, precommitContent)
   } catch (e) {
-    console.error('Yeeeha');
-    console.error('Yeeeha Failed to create the hook file in your .git/hooks folder because:');
-    console.error('Yeeeha ' + e.message);
-    console.error('Yeeeha The hook was not installed.');
-    console.error('Yeeeha');
+    console.error('Yeeeha')
+    console.error('Yeeeha Failed to create the hook file in your .git/hooks folder because:')
+    console.error('Yeeeha ' + e.message)
+    console.error('Yeeeha The hook was not installed.')
+    console.error('Yeeeha')
   }
 
   try {
-    fs.chmodSync(precommit, '777');
+    fs.chmodSync(precommit, '777')
   } catch (e) {
-    console.error('Yeeeha');
-    console.error('Yeeeha chmod 0777 the pre-commit file in your .git/hooks folder because:');
-    console.error('Yeeeha ' + e.message);
-    console.error('Yeeeha');
+    console.error('Yeeeha')
+    console.error('Yeeeha chmod 0777 the pre-commit file in your .git/hooks folder because:')
+    console.error('Yeeeha ' + e.message)
+    console.error('Yeeeha')
   }
-});
+})

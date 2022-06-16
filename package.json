@@ -5,5 +5,9 @@
   "main": "index.js",
   "scripts": {
     "install": "node install.js"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "node-fetch": "^3.2.6"
   }
 }

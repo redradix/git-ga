@@ -1,3 +1,4 @@
+const axios = require('axios')
 const utils = require('./utils')
 
 // check account id in package.json
@@ -20,8 +21,4 @@ utils.log(commitDate)
 
 // send data to GA
 
-// userName
-// eventName
-// proyectName
-// date
-// hour
+utils.collet({ commitHash, commitAuthor, commitDate })
