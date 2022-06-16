@@ -42,13 +42,10 @@ fi
 # and see if it works in the current environment
 #
 
-
-echo 'node_modules/git-ga-module/'$1'.js'
-
 if [[ $* == *--dry-run* ]]; then
   if [[ -z "$BINARY" ]]; then
     exit 1
   fi
 else
-  "$BINARY" "$("$BINARY" -e "console.log(require.resolve('git-ga-module/"$1"'))")"
+  "$BINARY" "$("$BINARY" -e "console.log(require.resolve('yeeeha/"$1"'))")"
 fi

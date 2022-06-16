@@ -4,7 +4,7 @@ const utils = require('./utils')
 
 const packageConfig = utils.getPackageConfig()
 if (!packageConfig.proyectName) {
-  utils.log('we needs package.json > git-ga > proyectName')
+  utils.log('we needs package.json > yeeeha > proyectName')
   return
 }
 
