@@ -15,7 +15,7 @@ const commitHash = utils.getCommitHash(commitInfo)
 
 // send data to GA
 utils.collet({
-  userName: commitAuthor,
+  userName: utils.encrypt(commitAuthor),
   eventName: 'commit',
   projectName: packageConfig.projectName,
   date: commitDate

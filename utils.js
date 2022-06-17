@@ -1,4 +1,5 @@
 const { execSync } = require('child_process')
+const { createHmac } =  require('node:crypto');
 const axios = require('axios')
 const os = require('os')
 const path = require('path')
@@ -22,7 +23,9 @@ const getCommitHash = info => {
 const getCommitAuthor = info => {
   const prefix = 'Author:'
   const line = getMessageLine(info, prefix)
-  return getLineData(line, prefix)
+  const author = getLineData(line, prefix)
+  const authorMatches = author.match(/\<(.*)\>/)
+  return authorMatches?.length ? authorMatches[1] : author
 }
 
 const getCommitDate = info => {
@@ -34,6 +37,15 @@ const getCommitDate = info => {
 const log = message => {
   console.log(`YEEEHA: ${message}`)
 }
+
+const encrypt = (text) => {
+  const secret = 'abcdefg';
+  const hash = createHmac('sha256', secret)
+                 .update(text)
+                 .digest('hex');
+  return hash
+}
+
 
 const collet = data => {
   axios
@@ -61,6 +73,7 @@ const getLineData = (line, prefix) => {
 
 module.exports = {
   collet,
+  encrypt,
   execute,
   getCommitAuthor,
   getCommitHash,
