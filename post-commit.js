@@ -9,14 +9,14 @@ if (!packageConfig.projectName) {
 
 // get last commit info
 const commitInfo = utils.execute('git log -1')
-const commitHash = utils.getCommitHash(commitInfo)
 const commitAuthor = utils.getCommitAuthor(commitInfo)
 const commitDate = utils.getCommitDate(commitInfo)
+const commitHash = utils.getCommitHash(commitInfo)
 
 // send data to GA
 utils.collet({
-  commitHash,
-  commitAuthor,
-  commitDate,
-  projectName: packageConfig.projectName
+  userName: commitAuthor,
+  eventName: 'commit',
+  projectName: packageConfig.projectName,
+  date: commitDate
 })
