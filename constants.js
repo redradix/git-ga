@@ -1,3 +1,3 @@
 module.exports = {
-  serverUrl: 'http://localhost:3000/collect'
+  serverUrl: 'https://yeeehaa.herokuapp.com/collect'
 }
