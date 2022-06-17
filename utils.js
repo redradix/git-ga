@@ -1,5 +1,5 @@
 const { execSync } = require('child_process')
-const { createHmac } =  require('node:crypto');
+const { createHmac } = require('node:crypto')
 const axios = require('axios')
 const os = require('os')
 const path = require('path')
@@ -35,17 +35,14 @@ const getCommitDate = info => {
 }
 
 const log = message => {
-  console.log(`YEEEHA: ${message}`)
+  console.log(`\u001b[33mYEEEHA:\u001b[37m ${message}\n`)
 }
 
-const encrypt = (text) => {
-  const secret = 'abcdefg';
-  const hash = createHmac('sha256', secret)
-                 .update(text)
-                 .digest('hex');
+const encrypt = text => {
+  const secret = 'abcdefg'
+  const hash = createHmac('sha256', secret).update(text).digest('hex')
   return hash
 }
-
 
 const collet = data => {
   axios
